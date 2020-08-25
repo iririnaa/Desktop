@@ -1,0 +1,109 @@
+<html>
+<head>
+    <title>Hemming Coding</title>
+    <link href="1.css" rel="stylesheet">
+</head>
+<body>
+<meta charset="utf-8">
+<div class="text" ><p><font face="Bradley Hand ITC	">Hemming Coding	</font> </p></div>
+<input type="edit" id="fieldForUncoded" required minlength="4" maxlength="4" pattern="[0|1]{4}" oninput='CheckedParams()'/><BR>
+<input type=button id="send" onclick="Code();" value="Code" /><BR>
+<input type="edit" id="fieldForCoded" onkeypress="Filter();" required minlength="8" maxlength="8" pattern="[0|1]{8}" /><BR>
+<input type=button id="recieve" onclick="Decode();" value="Decode"/><BR>
+<input type="edit" id="reciever" disabled/>
+</body>
+<script>
+    function Code()
+    {
+        var input = fieldForUncoded.value.split('');
+        var digits = [];
+        digits[0] = parseInt(input[0]);
+        digits[1] = parseInt(input[1]);
+        digits[2] = parseInt(input[2]);
+        digits[3] = 0;
+        digits[4] = parseInt(input[3]);
+        digits[5] = 0;
+        digits[6] = 0;
+        fieldForCoded.value = GetCode(digits);
+    }
+
+    function GetCode(bits)
+    {
+        var codedString = "";
+        bits[6] = (bits[4] + bits[2] + bits[0])%2;
+        bits[5] = (bits[4] + bits[1] + bits[0])%2;
+        bits[3] = (bits[2] + bits[1] + bits[0])%2;
+        bits[7] = Check(bits.join(''));
+        return bits.join('');
+    }
+
+    function Decode()
+    {
+        send.disabled;
+        var coded = fieldForCoded.value.split("");
+        var singleMistakeChecker = Check(coded[3] + coded[2] + coded[1] + coded[0]) + Check(coded[5] + coded[4] + coded[1] + coded[0]) + Check(coded[6] + coded[4] + coded[2] + coded[0]);
+        var doubleMistakeChecker = Check(fieldForCoded.value);
+        if(singleMistakeChecker=="000" && doubleMistakeChecker=="0")
+            reciever.value = coded[0] + coded[1] + coded[2] + coded[4];
+        else
+        if(doubleMistakeChecker=="1")
+        {
+            var index = GetFromBinary(singleMistakeChecker);
+            alert("Mistake at the " + index + " index");
+            if(coded[coded.length-index-1]== "0")
+                coded[coded.length-index-1] = "1";
+            else
+                coded[coded.length-index-1] = "0";
+            fieldForCoded.value=coded.join('');
+        }
+        else
+            alert("OOOPS...Double mistake");
+    }
+
+    function GetFromBinary(binary)
+    {
+        var digits = binary.split("");
+        var number = 0;
+        var power = 1;
+        for(var i = digits.length-1; i >=0 ; i--)
+        {
+            number+=parseInt(binary[i]) * power;
+            power*=2;
+        }
+        return number;
+    }
+
+    function Check(code)
+    {
+        var counter = 0;
+        var codeArr = code.split("");
+        for(var i = 0; i < code.length; i++)
+        {
+            if(codeArr[i]=="1")
+                counter++;
+        }
+        if(counter%2!=0)
+            return "1";
+        else
+            return "0";
+    }
+
+    function CheckedParams(maxlength)
+    {
+        var flag = true;
+        var input = fieldForUncoded.value.split("");
+        for(var i = 0 ; i < input.length; i++){
+            if(input[i]!="0" && input[i]!="1"){
+                flag = false;
+                break;
+            }
+        }
+        if(input.length==4 && flag==true ){
+            send.disabled=false;
+        }
+        else{
+            send.disabled=true;
+        }
+    }
+</script>
+</html>

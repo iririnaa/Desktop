@@ -1,0 +1,50 @@
+input{
+    position: relative;
+    left: 643px;
+    top: 150;
+    margin-bottom: 5px;
+    border-radius:20px 20px 20px 20px;
+    padding-left:10px;
+    width: 200px;
+    height: 40px;
+    border: 3px groove black;
+}
+
+.text{
+    position:relative;
+    text-shadow: black 4px 4px 4px;
+    font-size:50px;
+    color:black;
+    height: 80px;
+    left:560px;
+}
+
+body{
+    position:absolute;
+}
+
+#send{
+    left:690px;
+    width: 100px;
+    height:30px;
+}
+
+#recieve{
+    left:690px;
+    width: 100px;
+    height:30px;
+}
+
+#fieldForUncoded:invalid{
+    border: 2px solid red;
+}
+#fieldForUncoded:valid{
+    border: 2px solid green;
+}
+
+#fieldForCoded:invalid{
+    border: 2px solid red;
+}
+#fieldForCoded:valid{
+    border: 2px solid green;
+}

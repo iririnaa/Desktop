@@ -1,0 +1,30 @@
+Read: 1001 , Read: 1002
+   notANumber 1001
+     Output ошибка
+   !
+   notANumber 1002
+     Output ошибка
+   !
+   ? 1001 0
+     ? 1002 0
+       Output ошибка
+   !
+   isNotAnInteger 1001
+     Output ошибка
+   !
+   isNotAnInteger 1002
+     Output ошибка
+   !
+   ? 1001 0
+     Write 1002
+   !
+   ? 1002 0
+     Write 1001
+   !
+   mark :
+      % 1001 1002
+      ? 1001 0
+        Write 1002
+      !
+      <=> 1001 1002
+   go mark       
